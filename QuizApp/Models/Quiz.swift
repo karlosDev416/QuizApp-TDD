@@ -23,6 +23,19 @@ class Quiz {
             next + question.point
         }
     }
+    
+    func calculateLetterGrade(score: Int) -> String {
+        switch score {
+            case 0...59:
+                return "F"
+            case 60...89:
+                return "B"
+            case 90...100:
+                return "A"
+            default:
+                return "N/A"
+        }
+    }
 }
 
 class Question {

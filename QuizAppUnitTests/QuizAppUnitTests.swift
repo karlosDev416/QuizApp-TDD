@@ -22,3 +22,19 @@ final class when_loading_a_quiz: XCTestCase {
         XCTAssertEqual(30, mathQuiz.totalPoints)
     }
 }
+
+class when_calculate_student_grade: XCTestCase {
+    
+    func test_calculate_grade_successfully_based_on_student_score() {
+        let quizesDTOs = QuizData.loadQuizDTOs()
+        let quizes = quizesDTOs.map(Quiz.init)
+        
+        let mathQuiz = quizes.first {
+            $0.quizId == 1
+        }!
+                
+        XCTAssertEqual("A", mathQuiz.calculateLetterGrade(score: 90))
+        XCTAssertEqual("B", mathQuiz.calculateLetterGrade(score: 72))
+        XCTAssertEqual("F", mathQuiz.calculateLetterGrade(score: 45))
+    }
+}
