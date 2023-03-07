@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct Grade {
+    let letter: String
+    let score: Int
+}
+
 class Quiz {
     let quizId: Int
     let title: String
@@ -35,6 +40,20 @@ class Quiz {
             default:
                 return "N/A"
         }
+    }
+    
+    func grade(submission: QuizSubmission) -> Grade {
+        var submissionTotal = 0
+        for question in questions {
+            let correctChoice = question.choices.first(where: { $0.isCorrect })
+            let userChoiceId = submission.selectedChoices[question.questionId]
+            if userChoiceId == correctChoice?.choiceId {
+                submissionTotal += question.point
+            }
+        }
+        let score = (Double(submissionTotal) / Double(totalPoints)) * 100
+        let letterGrade = calculateLetterGrade(score: Int(score))
+        return Grade(letter: letterGrade, score: submissionTotal)
     }
 }
 
